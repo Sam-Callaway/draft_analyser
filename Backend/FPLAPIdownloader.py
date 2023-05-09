@@ -11,11 +11,13 @@ response = requests.get(urlSummary)
 summary_data = response.json()
 
 # Save the JSON data to a file
-# with open('backend\data\summary.json', 'w') as file:
-#     json.dump(summary_data, file)
+with open('backend\data\summary.json', 'w') as file:
+    json.dump(summary_data, file)
 
 idtonamemap = {}
 idtonamemap.clear()
+nametoidmap = {}
+nametoidmap.clear()
 
 teammapping = {}
 teammapping.clear()
@@ -33,12 +35,16 @@ for element in summary_data["elements"]:
     teamid = element["team"]
     teamname = teammapping[teamid]
     idtonamemap.update({playerid:[playerfirst+" "+playersecond,webname,teamid,teamname]})
-    # url = "https://fantasy.premierleague.com/api/element-summary/"+str(playerid)+"/"
-    # playerresponse = requests.get(url)
-    # player_data = playerresponse.json()
-    # with open('backend\data\players\\'+str(playerid)+'.json', 'w') as file:
-    #     json.dump(player_data, file)
+    nametoidmap.update({webname+"_"+teamname:playerid})
+    url = "https://fantasy.premierleague.com/api/element-summary/"+str(playerid)+"/"
+    playerresponse = requests.get(url)
+    player_data = playerresponse.json()
+    with open('backend\data\players\\'+str(playerid)+'.json', 'w') as file:
+        json.dump(player_data, file)
 
 
 with open('backend\data\idtonamemap.json', 'w') as file:
     json.dump(idtonamemap, file)
+
+with open('backend\data\\nametoidmap.json', 'w') as file:
+    json.dump(nametoidmap, file)
