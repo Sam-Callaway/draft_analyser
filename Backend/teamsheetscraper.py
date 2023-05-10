@@ -17,6 +17,15 @@ managertags = {"John":300667,
 "Rory":513186,
 "Tom":254648}
 
+teamsheets = {}
+teamsheets.clear()
+for name in managertags:
+    teamsheets[name] = {1:{"field":[],"bench":[]}}
+    i = 2
+    while i < 39:
+        teamsheets[name].update({i:{"field":[],"bench":[]}})
+        i = i+1
+
 # Launch a browser
 driver = webdriver.Chrome()
 
@@ -51,3 +60,7 @@ for name in managertags:
 
 # Close the browser when finished
 driver.quit()
+
+with open('backend\data\\teamsheets.json', 'w') as file:
+    json.dump(teamsheets, file)
+

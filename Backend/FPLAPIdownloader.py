@@ -18,9 +18,9 @@ idtonamemap = {}
 idtonamemap.clear()
 nametoidmap = {}
 nametoidmap.clear()
-
 teammapping = {}
 teammapping.clear()
+
 for team in summary_data["teams"]:
     teamid = team["id"]
     teamname = team["name"]
@@ -48,3 +48,4 @@ with open('backend\data\idtonamemap.json', 'w') as file:
 
 with open('backend\data\\nametoidmap.json', 'w') as file:
     json.dump(nametoidmap, file)
+
