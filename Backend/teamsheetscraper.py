@@ -8,6 +8,18 @@ import json
 with open('backend\data\\nametoidmap.json') as namemap:
   namemap2 = namemap.read()
 
+with open('backend\data\summary.json') as s:
+  su = s.read()
+
+summary = json.loads(su)
+gameweek = 0
+
+
+for i in summary["events"]:
+    if i["is_current"] == True:
+        gameweek = i["id"]
+
+
 nametoidmap = json.loads(namemap2)
 
 managertags = {"John":300667,
@@ -32,7 +44,7 @@ driver = webdriver.Chrome()
 for name in managertags:
     managertag = managertags[name]
     i = 1
-    while i < 2:
+    while i < (gameweek + 1):
         url = "https://draft.premierleague.com/entry/"+str(managertag)+"/event/"+str(i)
         # Load the webpage
         driver.get(url)
@@ -52,14 +64,18 @@ for name in managertags:
             imgElement = parentElement.previous_sibling
             teamname = imgElement.get('title')
             playerid = nametoidmap[playername+"_"+teamname]
-            print(playername)
-            print(teamname)  
-            print(playerid)               
+            benchcheck = element.find_parents(class_="ism-bench__unit")
+            if benchcheck == []:
+                fieldbench = "field"
+            else:
+                fieldbench = "bench"
+            teamsheets[name][i][fieldbench].append(playerid)        
 
         i=i+1
 
 # Close the browser when finished
 driver.quit()
+
 
 with open('backend\data\\teamsheets.json', 'w') as file:
     json.dump(teamsheets, file)
