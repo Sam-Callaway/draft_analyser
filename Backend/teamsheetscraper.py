@@ -32,10 +32,10 @@ managertags = {"John":300667,
 teamsheets = {}
 teamsheets.clear()
 for name in managertags:
-    teamsheets[name] = {1:{"field":[],"bench":[]}}
+    teamsheets[name] = {1:{"pitch":[],"bench":[]}}
     i = 2
     while i < 39:
-        teamsheets[name].update({i:{"field":[],"bench":[]}})
+        teamsheets[name].update({i:{"pitch":[],"bench":[]}})
         i = i+1
 
 # Launch a browser
@@ -66,10 +66,10 @@ for name in managertags:
             playerid = nametoidmap[playername+"_"+teamname]
             benchcheck = element.find_parents(class_="ism-bench__unit")
             if benchcheck == []:
-                fieldbench = "field"
+                pitchbench = "pitch"
             else:
-                fieldbench = "bench"
-            teamsheets[name][i][fieldbench].append(playerid)        
+                pitchbench = "bench"
+            teamsheets[name][i][pitchbench].append(playerid)        
 
         i=i+1
 
